@@ -1,0 +1,8 @@
+li {
+  list-style-type: none; 
+  display:inline;
+}
+div li *:not(.questionBtn) {
+  margin:4px 7px;
+  text-align:center;
+}
