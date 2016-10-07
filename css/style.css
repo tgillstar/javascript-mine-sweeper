@@ -1,8 +1,8 @@
-li {
+div#boardgame li {
   list-style-type: none; 
-  display:inline;
+  display: inline;
 }
-div li *:not(.questionBtn) {
-  margin:4px 7px;
-  text-align:center;
+div#boardgame li *:not(.questionBtn) {
+  margin: 7px;
+  text-align: center;
 }

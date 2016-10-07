@@ -16,14 +16,30 @@ describe("Mine Sweeper", function() {
         });
     });
 
-    describe("#greets", function() {
-        it("should greet passed target", function() {
-            var greetings = (new Cow("Kate")).greets("Baby");
-            expect(greetings).to.equal("Kate greets Baby");
+    describe("#createGameBoard", function() {
+        beforeEach(function() {
+            //Will run before all tests in this block
+            this.board = new Board();
+        });
+        afterEach(function() {
+            //Will run after all tests in this block
+            delete this.board;
+        });
+
+        it("boardgame div element is in the DOM", function () {
+            expect(document.getElementById("boardgame")).to.not.be.null;
         });
 
         it("should have a variable i", function() {
-            should(i).be.null;
+            this.board.createGameBoard();
+        });
+
+        it("first placeholder (li) to be on the board", function () {
+            expect(document.getElementById("id_00")).to.not.be.null;
+        });
+
+        it("first game piece (? button) to be on the board", function () {
+            expect(document.getElementById("btn_00")).to.not.be.null;
         });
     });
 });
