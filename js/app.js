@@ -5,7 +5,7 @@ var board = new Board();
 board.createGameBoard();
 
 // Add values to each button to represent a bomb or no bomb
-board.addValuesToGamePieces();
+board.loopThroughGameBoard(board.addValuesToGamePieces);
 
 // Add event listeners to show the actual value when user clicks a button
 board.addClickEventToGamePieces();

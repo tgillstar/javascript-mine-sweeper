@@ -3,6 +3,14 @@ var should = chai.should();
 
 describe("Mine Sweeper", function() {
     describe("Game board constructor", function() {
+        afterEach(function() {
+            //Will run after all tests in this block
+            var myNode = document.getElementById("boardgame");
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
+        });
+
         it("should have a default columns and rows", function() {
             var board = new Board();
             expect(board.cols).to.equal(8);
@@ -16,22 +24,36 @@ describe("Mine Sweeper", function() {
         });
     });
 
-    describe("#createGameBoard", function() {
+    describe("#loopThroughGameBoard", function() {
         beforeEach(function() {
             //Will run before all tests in this block
             this.board = new Board();
-        });
-        afterEach(function() {
-            //Will run after all tests in this block
-            delete this.board;
         });
 
         it("boardgame div element is in the DOM", function () {
             expect(document.getElementById("boardgame")).to.not.be.null;
         });
 
-        it("should have a variable i", function() {
+        it("should loop through basic gameboard", function() {
+            function printMe (i, j) {
+                console.log(i,j);
+            }
+            this.board.loopThroughGameBoard(printMe);
+        });
+    });
+
+    describe("#createGameBoard", function() {
+        beforeEach(function() {
+            //Will run before all tests in this block
+            this.board = new Board();
             this.board.createGameBoard();
+        });
+        afterEach(function() {
+            //Will run after all tests in this block
+            var myNode = document.getElementById("boardgame");
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
         });
 
         it("first placeholder (li) to be on the board", function () {
@@ -40,6 +62,30 @@ describe("Mine Sweeper", function() {
 
         it("first game piece (? button) to be on the board", function () {
             expect(document.getElementById("btn_00")).to.not.be.null;
+        });
+    });
+
+    describe("#addValuesToGamePieces", function() {
+        beforeEach(function() {
+            //Will run before all tests in this block
+            this.board = new Board();
+            this.board.createGameBoard();
+            this.board.loopThroughGameBoard(this.board.addValuesToGamePieces);
+        });
+        afterEach(function() {
+            //Will run after all tests in this block
+            var myNode = document.getElementById("boardgame");
+            while (myNode.firstChild) {
+                myNode.removeChild(myNode.firstChild);
+            }
+        });
+
+        it("game piece (btn_00) value should be 0 on default 8x8 board", function () {
+            expect(document.getElementById("btn_00").value).to.equal('0');
+        });
+
+        it("game piece (btn_33) value should be 1 on default 8x8 board", function () {
+            expect(document.getElementById("btn_33").value).to.equal('1');
         });
     });
 });
