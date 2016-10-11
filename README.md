@@ -11,11 +11,5 @@ How to run the tests
 
 Click on each task for more detail information.
 
----
-To see a playable version of the game now
-
-- Check out a modified version of the basic game code running at CodePen: http://codepen.io/anon/pen/JRORXG
-
-
 
 
