@@ -20,13 +20,20 @@
     ];
 
     Board.prototype = {
-
-        loopThroughGameBoard: function (performThisWork){
+        forLoopThroughItems: function (performThisWork){
+            var self = this;
             for (var i = 0; i < this.cols; i++) {
                 for (var j = 0; j < this.rows; j++) {
-                    performThisWork(i,j);
+                    performThisWork(i, j, self);
                 }
             }
+        },
+
+        setElementAttributes: function (element, attributesArr) {
+            for (var item in attributesArr) {
+                element.setAttribute(attributesArr[item].name, attributesArr[item].value)
+            }
+            return element;
         },
 
         createGameBoard: function () {
@@ -36,13 +43,15 @@
                     var piecePlacement = document.createElement("li"),
                     gamePiece = document.createElement("button"),
                     gamePieceText = document.createTextNode("?"),
-                    liName = 'id_' + i.toString() + j.toString(),
+                    gamePieceName = 'id_' + i.toString() + j.toString(),
                     btnName = 'btn_' + i.toString() + j.toString();
-
                     gamePiece.appendChild(gamePieceText);
-                    gamePiece.setAttribute("id", btnName);
-                    gamePiece.setAttribute("class", "questionBtn");
-                    piecePlacement.setAttribute("id", liName);
+
+                    var gamePieceAttrs = [{name: 'id', value: btnName}, {name: 'class', value: 'questionBtn'}];
+                    gamePiece = this.setElementAttributes(gamePiece, gamePieceAttrs);
+
+                    var piecePlacementAttrs = [{name: 'id', value: gamePieceName}];
+                    piecePlacement = this.setElementAttributes(piecePlacement, piecePlacementAttrs);
                     piecePlacement.appendChild(gamePiece);
                     gameBoard.appendChild(piecePlacement);
                 }
@@ -52,16 +61,15 @@
             document.getElementById("boardgame").appendChild(gameBoard);
         },
 
-        addValuesToGamePieces: function (i,j) {
+        addValuesToGamePieces: function (i, j, self) {
             var id = i.toString() + j.toString(),
                 btnName = 'btn_' + id,
                 getPiece = document.getElementById(btnName);
-            
             getPiece.value = boardValues[i][j].toString();
         },
 
-        showValueOfButton: function (liName, btnValue) {
-            document.getElementById(liName).innerHTML = "<span>"+ btnValue+ "</span>";
+        showValueOfButton: function (gamePieceName, btnValue) {
+            document.getElementById(gamePieceName).innerHTML = "<span>"+ btnValue+ "</span>";
         },
 
         showValueOfButtonDelegate: function (outter, inner) {
@@ -71,17 +79,12 @@
             }
         },
 
-        addClickEventToGamePieces: function () {
-            var self = this;
-            for (var i = 0; i < this.cols; i++) {
-                for (var j = 0; j < this.rows; j++) {
-                    var id = i.toString() + j.toString();
-                    var liName = 'id_' + id;
-                    var btnName = 'btn_' + id;
-                    var elem = document.getElementById(btnName);
-                    elem.addEventListener("click", self.showValueOfButtonDelegate(liName, elem.value),false);
-                }
-            }
+        addClickEventToGamePieces: function (i, j, self) {
+            var id = i.toString() + j.toString(),
+                gamePieceName = 'id_' + id,
+                btnName = 'btn_' + id,
+                elem = document.getElementById(btnName);
+            elem.addEventListener("click", self.showValueOfButtonDelegate(gamePieceName, elem.value),false);
         }
     };
 
